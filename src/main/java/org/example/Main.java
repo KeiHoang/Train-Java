@@ -5,29 +5,28 @@ package org.example;
 import java.math.BigInteger;
 // Thuật toán Russian Peasant Multiplication em search StackOverflow
 public class Main {
-    static BigInteger nhan(long a, long b) {
-        boolean negative = (a < 0) != (b < 0);
+    static int multiply(int n, int m) {
+        boolean negative = (n < 0) != (m < 0);
 
-        BigInteger x = BigInteger.valueOf(a).abs();
-        BigInteger y = BigInteger.valueOf(b).abs();
-        BigInteger result = BigInteger.ZERO;
+        long x = Math.min(Math.abs((long) n), Math.abs((long) m));
+        long y = Math.max(Math.abs((long) n), Math.abs((long) m));
+        long result = 0;
 
-        while (y.signum() > 0) {
-            if (y.testBit(0)) {
-                result = result.add(x);
-            }
-
-            x = x.shiftLeft(1);
-            y = y.shiftRight(1);
+        for (long i = 0; i < x; i++) {
+            result += y;
         }
 
-        return negative ? result.negate() : result;
+        if (negative) {
+            result = -result;
+        }
+
+        return Math.toIntExact(result);
     }
 
     public static void main(String[] args) {
-        System.out.println(nhan(2, 3));    // 6
-        System.out.println(nhan(-2, 3));   // -6
-        System.out.println(nhan(-2, -3));  // 6
-        System.out.println(nhan(2, -3));   // -6
+        System.out.println(multiply(2, 3));    // 6
+        System.out.println(multiply(-2, 3));   // -6
+        System.out.println(multiply(-2, -3));  // 6
+        System.out.println(multiply(2, -3));   // -6
     }
 }
